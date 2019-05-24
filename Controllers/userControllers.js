@@ -159,20 +159,20 @@ class UserController {
         );
     }
 
-    getUsersStorage() {
-        let users = [];
+    // getUsersStorage() {
+    //     let users = [];
 
-        // if (sessionStorage.getItem("users")) {
-        //     users = JSON.parse(sessionStorage.getItem("users"));
-        // }
-        if (localStorage.getItem("users")) {
-            users = JSON.parse(localStorage.getItem("users"));
-        }
-        return users;
-    }
+    //     // if (sessionStorage.getItem("users")) {
+    //     //     users = JSON.parse(sessionStorage.getItem("users"));
+    //     // }
+    //     if (localStorage.getItem("users")) {
+    //         users = JSON.parse(localStorage.getItem("users"));
+    //     }
+    //     return users;
+    // }
 
     selectionAll() {
-        let users = this.getUsersStorage();
+        let users = User.getUsersStorage();
 
         users.forEach(dataUser => {
 
@@ -228,6 +228,13 @@ class UserController {
 
         tr.querySelector(".btn-delete").addEventListener("click", () => {
             if (confirm('Deseja mesmo excluir?')) {
+                
+                let user = new User();
+
+                user.loadFromJSON(JSON.parse(tr.dataset.user));
+
+                user.removeUser();
+
                 tr.remove();
 
                 this.updateCount();
